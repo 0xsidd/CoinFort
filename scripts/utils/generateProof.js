@@ -21,6 +21,7 @@ async function generateProof(preImage,calldata1,calldata2) {
         `${appRoot}/circuits/build/circuit_js/circuit.wasm`,
         `${appRoot}/circuits/build/keys/circuit_0000.zkey`
     );
+    console.log(proof,publicSignals);
     return { proof, publicSignals };
 }
 
