@@ -1,1 +1,1 @@
-Circuit
+Smart contract
