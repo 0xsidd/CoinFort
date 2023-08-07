@@ -3,7 +3,7 @@ const { generateProof } = require("./utils/generateProof.js");
 const { verify } = require("./utils/verify.js");
 
 async function main() {
-    const { proof, publicSignals } = await generateProof(10);
+    const { proof, publicSignals } = await generateProof(10,10,10);
     await verify(proof, publicSignals);
 }
 
