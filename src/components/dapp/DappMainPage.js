@@ -9,6 +9,7 @@ import original from 'react95/dist/themes/original';
 import "./DappMainPage.css"
 
 import Register from '../register/Register';
+import SwapAssetsWindow from "../swap/Swap";
 
 
 const GlobalStyles = createGlobalStyle`
@@ -65,11 +66,11 @@ export const DappMainPage = () => {
                 <GlobalStyles />
                 <ThemeProvider theme={original}>
                     <MenuList style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
-                        <MenuListItem style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <MenuListItem style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={handleRegister}>
                             Register
                         </MenuListItem>
                         <Separator orientation='vertical' size='43px' />
-                        <MenuListItem style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+                        <MenuListItem style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onClick={handleSwapAssets} >
                             Swap Assets
                         </MenuListItem>
                         <Separator orientation='vertical' size='43px' />
@@ -86,6 +87,7 @@ export const DappMainPage = () => {
                         </MenuListItem>
                     </MenuList>
                     {activeWindow === 'register' && <Register />}
+                    {activeWindow === 'swapAssets' && <SwapAssetsWindow />}
                 </ThemeProvider>
             </div>
         </div>
