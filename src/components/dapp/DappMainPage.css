@@ -1,0 +1,21 @@
+.main-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  /* width: 1000px; */
+}
+
+.title {
+  text-align: center;
+}
+
+.launch-button {
+  margin-bottom: 1rem;
+  /* Add margin-bottom to create a gap */
+}
+
+.about-window {
+  width: 60%;
+  margin-top: 2rem;
+}
