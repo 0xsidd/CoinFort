@@ -1,40 +1,28 @@
 import React from 'react';
-import { Window, WindowContent, TextInput, Button, Hourglass } from 'react95';
+import { Window, WindowContent, TextInput, Button, Checkbox, Hourglass } from 'react95';
 import { ThemeProvider } from 'styled-components';
 import original from 'react95/dist/themes/original';
 
 
 
-const LoginWindow = () => {
+const CustomOps = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [metamaskStatus, setMetamaskStatus] = React.useState(false);
+  const [inputString, setInputString] = React.useState('');
+  const [callData, setCallData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [txnHash, setTXNHash] = React.useState("0x00");
 
-  const handleExplorerClick = () => {};
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    let res;
-    let txn;
-    try {
-      setLoading(false);
-      setTXNHash(txn.transactionHash);
-      alert("User Registered");
-    } catch (err) {
-      setLoading(false);
-      alert("txn denied");
-    }
-
-  };
+  const handleSubmit = async () => { };
 
   return (
     <ThemeProvider theme={original}>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        {/* <GlobalStyles /> */}
         <Window className="login-window" style={{ width: '600px' }}>
           <WindowContent>
-            <h2 style={{ fontSize: '24px' }}>Register Wallet</h2>
+            <h2 style={{ fontSize: '24px' }}>Custom Operations</h2>
             <br />
             <label style={{ textAlign: 'left' }}>Username</label>
             <TextInput
@@ -50,20 +38,30 @@ const LoginWindow = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button style={{ width: '145px' }}>Register</Button>
+            <br />
+            <label style={{ textAlign: 'left' }}>Calldata</label>
+            <TextInput
+              label="CallData"
+              type="Calldata"
+              value={callData}
+            />
+            <Button onClick={handleSubmit} style={{ width: '145px' }}>Hit</Button>
             <Button >View it on explorer</Button>
-            {loading ? (
-              <div style={{ textAlign: 'center' }}>
-                <Hourglass />
-              </div>
-            ) : (
-              <div style={{ marginTop: '37px' }} />
-            )}
+            <Checkbox label='metamask?' className="Toggle" checked={metamaskStatus} />
           </WindowContent>
+          {loading ? (
+            <div style={{ textAlign: 'center' }}>
+              <Hourglass />
+            </div>
+          ) : (
+            <div style={{ marginTop: '37px' }} />
+          )}
         </Window>
       </div>
     </ThemeProvider>
   );
 };
 
-export default LoginWindow;
+export default CustomOps;
+
+

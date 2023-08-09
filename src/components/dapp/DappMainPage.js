@@ -10,6 +10,10 @@ import "./DappMainPage.css"
 
 import Register from '../register/Register';
 import SwapAssetsWindow from "../swap/Swap";
+import TransferAsset from "../transferAsset/TransferAsset";
+import CustomOps from "../customOps/CustomOps";
+
+
 
 
 const GlobalStyles = createGlobalStyle`
@@ -74,11 +78,11 @@ export const DappMainPage = () => {
                             Swap Assets
                         </MenuListItem>
                         <Separator orientation='vertical' size='43px' />
-                        <MenuListItem style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+                        <MenuListItem style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }}onClick={handleTransferAssets} >
                             Transfer Assets
                         </MenuListItem>
                         <Separator orientation='vertical' size='43px' />
-                        <MenuListItem style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <MenuListItem style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }}onClick={handleCustomOperations}>
                             Custom operations
                         </MenuListItem>
                         <Separator orientation='vertical' size='43px' />
@@ -88,6 +92,8 @@ export const DappMainPage = () => {
                     </MenuList>
                     {activeWindow === 'register' && <Register />}
                     {activeWindow === 'swapAssets' && <SwapAssetsWindow />}
+                    {activeWindow === 'transferAssets' && <TransferAsset />}
+                    {activeWindow === 'customOperations' && <CustomOps />}
                 </ThemeProvider>
             </div>
         </div>

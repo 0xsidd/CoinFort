@@ -9,7 +9,7 @@ const Header = ()=>{
     return (
         <header className="header">
             <ThemeProvider theme={original}>
-                <h1 className='header-text'>Zero Wallet</h1>
+                <h1 className='header-text'>Coin Fort</h1>
             </ThemeProvider>
         </header>
     );
