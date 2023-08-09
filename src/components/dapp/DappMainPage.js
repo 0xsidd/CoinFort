@@ -12,6 +12,8 @@ import Register from '../register/Register';
 import SwapAssetsWindow from "../swap/Swap";
 import TransferAsset from "../transferAsset/TransferAsset";
 import CustomOps from "../customOps/CustomOps";
+import WalletInfo from '../walletInfo/WalletInfo';
+
 
 
 
@@ -86,7 +88,7 @@ export const DappMainPage = () => {
                             Custom operations
                         </MenuListItem>
                         <Separator orientation='vertical' size='43px' />
-                        <MenuListItem style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <MenuListItem style={{ flex: '1', display: 'flex', justifyContent: 'center', alignItems: 'center' }}onClick={handleWalletInfo}>
                             Wallet info.
                         </MenuListItem>
                     </MenuList>
@@ -94,6 +96,7 @@ export const DappMainPage = () => {
                     {activeWindow === 'swapAssets' && <SwapAssetsWindow />}
                     {activeWindow === 'transferAssets' && <TransferAsset />}
                     {activeWindow === 'customOperations' && <CustomOps />}
+                    {activeWindow === 'walletInfo' && <WalletInfo />}
                 </ThemeProvider>
             </div>
         </div>
