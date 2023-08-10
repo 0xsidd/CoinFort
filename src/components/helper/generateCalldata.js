@@ -13,15 +13,3 @@ export const tokenTransfer = async (tokenAddress, to, tokenAmount) => {
     let opData = abi.encode(["address", "uint256", "bytes"], [tokenAddress, "0", incData]);
     return opData
 }
-
-export const calldataHash = async (calldata) => {
-    const params = abi.encode(
-        ["bytes[]"], // encode as address array
-        [calldata]
-    );
-    const hash = ethers.utils.keccak256(params);
-    return hash;
-};
-export const combineArrays = async (...arrays) => {
-    return [].concat(...arrays);
-}
