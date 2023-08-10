@@ -3,6 +3,10 @@ import { Window, WindowContent, TextInput, Button, Hourglass } from 'react95';
 import { ThemeProvider } from 'styled-components';
 import original from 'react95/dist/themes/original';
 
+import factoryInstance from "../helper/factoryInstance";
+import connectWallet from "../helper/connectWallet";
+
+import { generatePoseidonHash } from "../helper/hash";
 
 
 const LoginWindow = () => {
@@ -11,13 +15,20 @@ const LoginWindow = () => {
   const [loading, setLoading] = React.useState(false);
   const [txnHash, setTXNHash] = React.useState("0x00");
 
-  const handleExplorerClick = () => {};
+  const handleExplorerClick = () => {
+    window.open(`https://sepolia.etherscan.io/tx/${txnHash}`, '_blank');
+  };
 
   const handleSubmit = async () => {
     setLoading(true);
+    let wallet = await connectWallet();
+    const factory = await factoryInstance();
+    const poseidonHash = await generatePoseidonHash(password);
     let res;
     let txn;
     try {
+      res = await factory.connect(wallet).registerUser(poseidonHash.finalHash, username);
+      txn = await res.wait();
       setLoading(false);
       setTXNHash(txn.transactionHash);
       alert("User Registered");
@@ -50,8 +61,8 @@ const LoginWindow = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button style={{ width: '145px' }}>Register</Button>
-            <Button >View it on explorer</Button>
+            <Button onClick={handleSubmit} style={{ width: '145px' }}>Register</Button>
+            <Button onClick={handleExplorerClick}>View it on explorer</Button>
             {loading ? (
               <div style={{ textAlign: 'center' }}>
                 <Hourglass />
