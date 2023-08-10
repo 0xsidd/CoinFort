@@ -28,7 +28,7 @@ contract WalletFactory is Groth16Verifier {
     event UserRegistered(
         bytes32 indexed _hash,
         string indexed _userName,
-        uint256 indexed timestamp
+        uint256 indexed _timestamp
     );
     event WalletCalled(
         string indexed _username,
