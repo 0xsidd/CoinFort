@@ -3,7 +3,28 @@ import { Window, WindowContent, TextInput, Button, SelectNative, Checkbox, Hourg
 import { ThemeProvider } from 'styled-components';
 import original from 'react95/dist/themes/original';
 import './TransferAsset.css';
+import { ethers } from "ethers";
 
+import { getProof } from "../helper/generateProof";
+import connectWallet from "../helper/connectWallet";
+import { transferETH, tokenTransfer } from "../helper/generateCalldata";
+import { generateContractParams } from "../helper/generateContractParams";
+import { transact } from "../helper/transact";
+
+import dotenv from 'dotenv';
+dotenv.config();
+
+const WETH = process.env.REACT_APP_WETH_ADDRESS;
+const USDC = process.env.REACT_APP_USDC_ADDRESS;
+const DAI = process.env.REACT_APP_DAI_ADDRESS;
+const ETH = process.env.REACT_APP_ETH_ADDRESS;
+
+const tokens = [
+    { value: WETH, label: 'WETH' },
+    { value: ETH, label: 'ETH' },
+    { value: USDC, label: 'USDC' },
+    { value: DAI, label: 'DAI' }
+];
 
 
 const TransferAsset = () => {
@@ -12,7 +33,7 @@ const TransferAsset = () => {
     const [amount, setAmount] = useState('');
     const [to, setTo] = useState('');
     const [metamaskStatus, setMetamaskStatus] = React.useState(false);
-    const [token, setToken] = useState("");
+    const [token, setToken] = useState(ETH);
     const [loading, setLoading] = React.useState(false);
     const [txnHash, setTXNHash] = React.useState("0x00");
 
@@ -24,10 +45,58 @@ const TransferAsset = () => {
         setToken(value);
     };
 
-    const handleExplorerClick = () => {};
+    const handleExplorerClick = () => {
+        if (txnHash === "0x00") {
+            alert("no transaction found");
+        }
+        else {
+            window.open(`https://sepolia.etherscan.io/tx/${txnHash}`, '_blank');
+        }
+    };
 
 
-    const handleSubmit = async () => {};
+    const handleSubmit = async () => {
+        setLoading(true);
+        // let wallet = await connectWallet();
+        const rpc = process.env.REACT_APP_SEPOLIA_RPC;
+        const provider = new ethers.providers.JsonRpcProvider(rpc.toString());
+        const network = await provider.getNetwork();
+
+        let proof;
+        let calldata = [];
+        if (token.value === ETH) {
+            let transferCalldata = await transferETH(to, ethers.utils.parseEther(amount));
+            let fakeRefundData = await transferETH("0x81bd82E9A13563d0C5d3fF14755274960f6548F4", ethers.utils.parseEther("0.000000001"));
+            calldata = [transferCalldata, fakeRefundData]
+        }
+        else {
+            let transferCalldata = await tokenTransfer(token.value, to, ethers.utils.parseEther(amount));
+            let fakeRefundData = await transferETH("0x81bd82E9A13563d0C5d3fF14755274960f6548F4", ethers.utils.parseEther("0.000000001"));
+            calldata = [transferCalldata, fakeRefundData]
+        }
+
+        if (metamaskStatus) {
+            let wallet = await connectWallet();
+            proof = await getProof(password, calldata, network.chainId);
+            let txData = await generateContractParams(wallet, proof, userid, calldata, password, network.chainId, await wallet.getAddress());
+            if (txData) {
+                console.log("--------------------------------");
+                let res = await transact(wallet, txData.proofFinal, txData.calldata, userid, txData.gasPrice, txData.estimatedGas);
+                if (res) {
+                    setLoading(false);
+                    alert("Asset Transfered");
+                    setTXNHash(res);
+                } else {
+                    setLoading(false);
+                }
+            } else {
+                setLoading(false);
+            }
+        }
+        else {
+
+        }
+    };
 
     return (
         <ThemeProvider theme={original}>
@@ -39,6 +108,7 @@ const TransferAsset = () => {
                         <label style={{ textAlign: 'left' }}>From</label>
                         <SelectNative
                             defaultValue={'eth'}
+                            options={tokens}
                             menuMaxHeight={160}
                             width={160}
                             onChange={handleTokenChange}
