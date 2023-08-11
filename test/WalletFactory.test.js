@@ -7,7 +7,7 @@ describe("Smart wallet", async function () {
     let signer;
 
     const getLowLevelCalldata = async (address, value) => {
-        let opData = abi.encode(["address", "uint256", "bytes"], [address, value.toString(), 0x00]);
+        let opData = abi.encode(["address", "uint256", "bytes"], [address, value.toString(), "0x"]);
         return opData
     }
 
