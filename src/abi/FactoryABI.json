@@ -1,0 +1,301 @@
+[
+    {
+        "inputs": [],
+        "name": "CallFailed",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "CanNotUseSameProofAgain",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "EthTransferFailed",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "IncorrectSecret",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "InfufficientETHBalance",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "InvalidCalldata",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "InvalidCreds",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "InvalidHash",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "InvalidMsgSender",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "UserAlreadyRegistered",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "UserNotRegistered",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "ZKPVerificationFailed",
+        "type": "error"
+    },
+    {
+        "inputs": [],
+        "name": "ZeroAmountDeposit",
+        "type": "error"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "bytes32",
+                "name": "_hash",
+                "type": "bytes32"
+            },
+            {
+                "indexed": true,
+                "internalType": "string",
+                "name": "_userName",
+                "type": "string"
+            },
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "timestamp",
+                "type": "uint256"
+            }
+        ],
+        "name": "UserRegistered",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "string",
+                "name": "_username",
+                "type": "string"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "_walletAddress",
+                "type": "address"
+            }
+        ],
+        "name": "WalletCalled",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256[2]",
+                "name": "_pA",
+                "type": "uint256[2]"
+            },
+            {
+                "internalType": "uint256[2][2]",
+                "name": "_pB",
+                "type": "uint256[2][2]"
+            },
+            {
+                "internalType": "uint256[2]",
+                "name": "_pC",
+                "type": "uint256[2]"
+            },
+            {
+                "internalType": "uint256[3]",
+                "name": "_pubSignals",
+                "type": "uint256[3]"
+            },
+            {
+                "internalType": "string",
+                "name": "_userName",
+                "type": "string"
+            },
+            {
+                "internalType": "bytes[]",
+                "name": "_callData",
+                "type": "bytes[]"
+            }
+        ],
+        "name": "callWallet",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "bytes[]",
+                "name": "_calldata",
+                "type": "bytes[]"
+            }
+        ],
+        "name": "hashAndSplitCalldata",
+        "outputs": [
+            {
+                "internalType": "bytes32",
+                "name": "paddedI",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "bytes32",
+                "name": "paddedJ",
+                "type": "bytes32"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "name": "isUserNameTaken",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "bytes32",
+                "name": "",
+                "type": "bytes32"
+            }
+        ],
+        "name": "nullifier",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "bytes32",
+                "name": "_hash",
+                "type": "bytes32"
+            },
+            {
+                "internalType": "string",
+                "name": "_userName",
+                "type": "string"
+            }
+        ],
+        "name": "registerUser",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "name": "usernameToPassword",
+        "outputs": [
+            {
+                "internalType": "bytes32",
+                "name": "",
+                "type": "bytes32"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "name": "usernameToWalletAddress",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256[2]",
+                "name": "_pA",
+                "type": "uint256[2]"
+            },
+            {
+                "internalType": "uint256[2][2]",
+                "name": "_pB",
+                "type": "uint256[2][2]"
+            },
+            {
+                "internalType": "uint256[2]",
+                "name": "_pC",
+                "type": "uint256[2]"
+            },
+            {
+                "internalType": "uint256[3]",
+                "name": "_pubSignals",
+                "type": "uint256[3]"
+            }
+        ],
+        "name": "verifyProof",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
