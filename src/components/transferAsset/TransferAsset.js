@@ -4,6 +4,8 @@ import { ThemeProvider } from 'styled-components';
 import original from 'react95/dist/themes/original';
 import './TransferAsset.css';
 import { ethers } from "ethers";
+import axios from 'axios';
+
 
 import { getProof } from "../helper/generateProof";
 import connectWallet from "../helper/connectWallet";
@@ -59,6 +61,8 @@ const TransferAsset = () => {
         setLoading(true);
         // let wallet = await connectWallet();
         const rpc = process.env.REACT_APP_SEPOLIA_RPC;
+        const sponsor = process.env.REACT_APP_SPONSOR;
+        const API = (process.env.REACT_APP_PAYMASTER_API).toString();
         const provider = new ethers.providers.JsonRpcProvider(rpc.toString());
         const network = await provider.getNetwork();
 
@@ -66,12 +70,12 @@ const TransferAsset = () => {
         let calldata = [];
         if (token.value === ETH) {
             let transferCalldata = await transferETH(to, ethers.utils.parseEther(amount));
-            let fakeRefundData = await transferETH("0x81bd82E9A13563d0C5d3fF14755274960f6548F4", ethers.utils.parseEther("0.000000001"));
+            let fakeRefundData = await transferETH(sponsor, ethers.utils.parseEther("0.000000001"));
             calldata = [transferCalldata, fakeRefundData]
         }
         else {
             let transferCalldata = await tokenTransfer(token.value, to, ethers.utils.parseEther(amount));
-            let fakeRefundData = await transferETH("0x81bd82E9A13563d0C5d3fF14755274960f6548F4", ethers.utils.parseEther("0.000000001"));
+            let fakeRefundData = await transferETH(sponsor, ethers.utils.parseEther("0.000000001"));
             calldata = [transferCalldata, fakeRefundData]
         }
 
@@ -80,7 +84,6 @@ const TransferAsset = () => {
             proof = await getProof(password, calldata, network.chainId);
             let txData = await generateContractParams(wallet, proof, userid, calldata, password, network.chainId, await wallet.getAddress());
             if (txData) {
-                console.log("--------------------------------");
                 let res = await transact(wallet, txData.proofFinal, txData.calldata, userid, txData.gasPrice, txData.estimatedGas);
                 if (res) {
                     setLoading(false);
@@ -94,7 +97,31 @@ const TransferAsset = () => {
             }
         }
         else {
-
+            let wallet;
+            console.log("----------");
+            proof = await getProof(password, calldata, network.chainId);
+            let txData = await generateContractParams(wallet, proof, userid, calldata, password, network.chainId, sponsor);
+            const payload =
+            {
+                proof0: txData.proofFinal[0],
+                proof1: txData.proofFinal[1],
+                proof2: txData.proofFinal[2],
+                proof3: txData.proofFinal[3],
+                username: userid,
+                calldata: txData.calldata,
+                gasPrice: txData.gasPrice,
+                gasLimit: txData.estimatedGas
+            }
+            let res = await axios.post(API, payload);
+            if (res.status === 200) {
+                setLoading(false);
+                alert("Asset Transferred");
+                setTXNHash(res.data.transactionHash);
+            }
+            else {
+                setLoading(false);
+                alert("Transaction Failed");
+            }
         }
     };
 
