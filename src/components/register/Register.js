@@ -16,7 +16,7 @@ const LoginWindow = () => {
   const [txnHash, setTXNHash] = React.useState("0x00");
 
   const handleExplorerClick = () => {
-    window.open(`https://sepolia.etherscan.io/tx/${txnHash}`, '_blank');
+    window.open(`https://goerli.basescan.org/tx/${txnHash}`, '_blank');
   };
 
   const handleSubmit = async () => {

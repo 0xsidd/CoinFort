@@ -1,5 +1,5 @@
 import React from 'react';
-import { Window, WindowContent, TextInput, Button, TableHead, TableRow, TableHeadCell, TableDataCell, Table, TableBody, Hourglass,WindowHeader } from 'react95';
+import { Window, WindowContent, TextInput, Button, TableHead, TableRow, TableHeadCell, TableDataCell, Table, TableBody, Hourglass, WindowHeader } from 'react95';
 import { ThemeProvider } from 'styled-components';
 import original from 'react95/dist/themes/original';
 
@@ -38,7 +38,7 @@ const WalletInfo = () => {
     DAI = new ethers.Contract(daiAddress, ERC20ABI, provider);
     USDC = new ethers.Contract(usdcAddress, ERC20ABI, provider);
     WETH = new ethers.Contract(wethAddress, ERC20ABI, provider);
-    
+
     const factory = await factoryInstance();
     const userWallet = await factory.usernameToWalletAddress(username);
     if (userWallet === "0x0000000000000000000000000000000000000000") {
@@ -50,10 +50,10 @@ const WalletInfo = () => {
       const ethBal = await provider.getBalance(userWallet);
       const wethBal = await WETH.balanceOf(userWallet);
       setETH((parseInt(ethBal._hex, 16) / 1e18).toFixed(4));
-      setUSDC((usdcBal / 1e18).toFixed(7));
-      setDAI((daiBal / 1e18).toFixed(7));
+      setUSDC((parseInt(usdcBal._hex, 16) / 1e18).toFixed(7));
+      setDAI((parseInt(daiBal._hex, 16) / 1e18).toFixed(7));
+      setWeth((parseInt(wethBal._hex, 16) / 1e18).toFixed(7));      // setUSDC((usdcBal / 1e18).toFixed(7));
       setUserWalletAddress(userWallet);
-      setWeth((wethBal / 1e18).toFixed(7));
       setLoading(false);
     }
   };
@@ -75,7 +75,7 @@ const WalletInfo = () => {
               <Button onClick={handleSubmit}>Get Wallet info.</Button>
             </div>
             <div style={{ marginTop: '20px' }}>
-            <WindowHeader>{loading ? <Hourglass /> : userWalletAddress}</WindowHeader>
+              <WindowHeader>{loading ? <Hourglass /> : userWalletAddress}</WindowHeader>
               <Table>
                 <TableHead>
                   <TableRow>

@@ -26,7 +26,7 @@ const CustomOps = () => {
       alert("no transaction found");
     }
     else {
-      window.open(`https://sepolia.etherscan.io/tx/${txnHash}`, '_blank');
+      window.open(`https://goerli.basescan.org/tx/${txnHash}`, '_blank');
     }
   };
 
@@ -86,8 +86,8 @@ const CustomOps = () => {
     }
     else {
       let wallet;
-      proof = await getProof(password, calldata, network.chainId);
-      let txData = await generateContractParams(wallet, proof, username, calldata, password, network.chainId, sponsor);
+      proof = await getProof(password, calldata[0], network.chainId);
+      let txData = await generateContractParams(wallet, proof, username, calldata[0], password, network.chainId, sponsor);
       const payload =
       {
         proof0: txData.proofFinal[0],

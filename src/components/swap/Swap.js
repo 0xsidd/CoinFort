@@ -55,7 +55,7 @@ const SwapAssetsWindow = () => {
             alert("no transaction found");
         }
         else {
-            window.open(`https://sepolia.etherscan.io/tx/${txnHash}`, '_blank');
+            window.open(`https://goerli.basescan.org/tx/${txnHash}`, '_blank');
         }
     };
 

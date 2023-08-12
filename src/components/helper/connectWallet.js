@@ -7,10 +7,10 @@ const connectWallet = async () => {
 
       // Check if MetaMask is connected to the correct network
       const chainId = await provider.send('eth_chainId');
-      if (chainId !== '0xaa36a7') {
+      if (chainId !== '0x14a33') {
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0xaa36a7' }] // Switch to chain ID 80001
+          params: [{ chainId: '0x14a33' }] // Switch to chain ID 80001
         });
 
         // Wait for the network to be switched
@@ -18,7 +18,7 @@ const connectWallet = async () => {
 
         // Re-check the chain ID
         const newChainId = await provider.send('eth_chainId');
-        if (newChainId !== '0xaa36a7') {
+        if (newChainId !== '0x14a33') {
           console.error('Failed to switch to the desired network (Chain ID 80001).');
           return null;
         }
