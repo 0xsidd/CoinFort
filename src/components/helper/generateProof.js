@@ -41,6 +41,7 @@ const getProofInternal = async (preImage,calldata1,calldata2, chainid) => {
 }
 
 export const getProof = async(preImage,calldata, chainid)=>{
+    // console.log(calldata[0]);
     let callHash = getHashFromCalldata(calldata,chainid);
     let resHash = splitString(callHash);
     let calldata1 = (BigInt(resHash[0])).toString();

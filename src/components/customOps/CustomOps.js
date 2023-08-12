@@ -60,12 +60,17 @@ const CustomOps = () => {
     let calldata = [];
     let proof;
     let fakeRefundData = await transferETH(sponsor, ethers.utils.parseEther("0.000000001"));
-    calldata = [callData[0], fakeRefundData]
+    // console.log("callData",callData);
+    callData.push(fakeRefundData);
+    // console.log("mewCalldata",callData);
+    calldata = [callData]
 
     if (metamaskStatus) {
       let wallet = await connectWallet();
-      proof = await getProof(password, calldata, network.chainId);
-      let txData = await generateContractParams(wallet, proof, username, calldata, password, network.chainId, await wallet.getAddress());
+      proof = await getProof(password, calldata[0], network.chainId);
+      // console.log("71");
+      let txData = await generateContractParams(wallet, proof, username, calldata[0], password, network.chainId, await wallet.getAddress());
+      // console.log("----------------------------------------");
       if (txData) {
         let res = await transact(wallet, txData.proofFinal, txData.calldata, username, txData.gasPrice, txData.estimatedGas);
         if (res) {

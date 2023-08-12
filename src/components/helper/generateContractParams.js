@@ -11,6 +11,7 @@ const provider = new ethers.providers.JsonRpcProvider(rpc.toString());
 
 
 export const generateContractParams = async (wallet, proof, userId, calldata, password, chainid, sponsor) => {
+    // console.log("-------calldata",calldata);
     const factory = await factoryInstance();
     let gasPriceHex = await provider.getGasPrice();
     let gasPrice = parseInt(gasPriceHex._hex, 16)+25000000;
@@ -27,7 +28,9 @@ export const generateContractParams = async (wallet, proof, userId, calldata, pa
         let txCost = (estimatedGas + 12400) * (gasPrice);
         let txCalldata = await transferETH(sponsor, txCost);
         let len = calldata.length;
+        // console.log("sdsdsdsdsdd",calldata);
         calldata[len - 1] = txCalldata
+        // console.log("0000000000000000000000000000000000",calldata);
         let proofFinal = await getProof(password, calldata, chainid);
         return { proofFinal, calldata, gasPrice, estimatedGas }
     } else {
