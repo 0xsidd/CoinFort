@@ -78,6 +78,7 @@ const TransferAsset = () => {
             let transferCalldata = await tokenTransfer(token.value, to, ethers.utils.parseEther(amount));
             let fakeRefundData = await transferETH(sponsor, ethers.utils.parseEther("0.000000001"));
             calldata = [transferCalldata, fakeRefundData]
+            console.log(calldata[0]);
         }
 
         if (metamaskStatus) {
