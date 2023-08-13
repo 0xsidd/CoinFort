@@ -18,14 +18,14 @@ dotenv.config();
 
 const WETH = process.env.REACT_APP_WETH_ADDRESS;
 const USDC = process.env.REACT_APP_USDC_ADDRESS;
-const DAI = process.env.REACT_APP_DAI_ADDRESS;
+const UNI = process.env.REACT_APP_UNI_ADDRESS;
 const ETH = process.env.REACT_APP_ETH_ADDRESS;
 
 const tokens = [
     { value: WETH, label: 'WETH' },
     { value: ETH, label: 'ETH' },
     { value: USDC, label: 'USDC' },
-    { value: DAI, label: 'DAI' }
+    { value: UNI, label: 'UNI' }
 ];
 
 
