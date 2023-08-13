@@ -14,28 +14,28 @@ const WalletInfo = () => {
   const [username, setUsername] = React.useState('');
   const [eth, setETH] = React.useState(0);
   const [usdc, setUSDC] = React.useState(0);
-  const [dai, setDAI] = React.useState(0);
+  const [uni, setUNI] = React.useState(0);
   const [weth, setWeth] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const [userWalletAddress, setUserWalletAddress] = React.useState("Wallet");
 
   let USDC;
-  let DAI;
+  let UNI;
   let WETH;
   const rpcUrl = process.env.REACT_APP_SEPOLIA_RPC;
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
   const wethAddress = process.env.REACT_APP_WETH_ADDRESS;
   const usdcAddress = process.env.REACT_APP_USDC_ADDRESS;
-  const daiAddress = process.env.REACT_APP_DAI_ADDRESS;
+  const uniAddress = process.env.REACT_APP_UNI_ADDRESS;
 
   const handleSubmit = async () => {
     setLoading(true);
     setETH(0);
     setUSDC(0);
-    setDAI(0);
+    setUNI(0);
     setWeth(0);
 
-    DAI = new ethers.Contract(daiAddress, ERC20ABI, provider);
+    UNI = new ethers.Contract(uniAddress, ERC20ABI, provider);
     USDC = new ethers.Contract(usdcAddress, ERC20ABI, provider);
     WETH = new ethers.Contract(wethAddress, ERC20ABI, provider);
 
@@ -46,12 +46,12 @@ const WalletInfo = () => {
       setLoading(false);
     } else {
       const usdcBal = await USDC.balanceOf(userWallet);
-      const daiBal = await DAI.balanceOf(userWallet);
+      const UNIBal = await UNI.balanceOf(userWallet);
       const ethBal = await provider.getBalance(userWallet);
       const wethBal = await WETH.balanceOf(userWallet);
       setETH((parseInt(ethBal._hex, 16) / 1e18).toFixed(4));
       setUSDC((parseInt(usdcBal._hex, 16) / 1e18).toFixed(7));
-      setDAI((parseInt(daiBal._hex, 16) / 1e18).toFixed(7));
+      setUNI((parseInt(UNIBal._hex, 16) / 1e18).toFixed(7));
       setWeth((parseInt(wethBal._hex, 16) / 1e18).toFixed(7));      // setUSDC((usdcBal / 1e18).toFixed(7));
       setUserWalletAddress(userWallet);
       setLoading(false);
@@ -111,10 +111,10 @@ const WalletInfo = () => {
                   <TableRow>
                     <TableDataCell style={{ textAlign: 'center' }}>
                       <span role='img' aria-label='lightning'>
-                        DAI
+                        UNI
                       </span>
                     </TableDataCell>
-                    <TableDataCell>{loading ? <Hourglass /> : dai}</TableDataCell>
+                    <TableDataCell>{loading ? <Hourglass /> : uni}</TableDataCell>
                   </TableRow>
                 </TableBody>
               </Table>
