@@ -92,4 +92,4 @@ If a *user hasn't set up an Externally Owned Account (EOA)* and decides to make 
 
 Coinfort originated in making a case against a Web3 basher complaining about complex products. 
 
-This way Coinfort eases your web3 spending of funds with only a userId and password.
+This way the Coinfort eases your web3 spending of funds with only a userId and password.
