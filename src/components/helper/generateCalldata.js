@@ -26,7 +26,7 @@ export const swapCallData = async (amountIn, fromToken, toToken, toAddress, unis
     const router = uniswapRouter;
 
     let ETH = process.env.REACT_APP_ETH_ADDRESS;
-    let WETH = process.env.REACT_APP_WETH_ADDRESS;
+    let WETH = "0x4200000000000000000000000000000000000006";
 
     let amount = amountIn.toString();
     if (fromToken !== toToken) {

@@ -73,6 +73,7 @@ const SwapAssetsWindow = () => {
         let userWallet = await factory.usernameToWalletAddress(userid);
 
         let calldata = [];
+        console.log("---------------------------",fromToken.value, toToken.value);
         calldata = await swapCallData(ethers.utils.parseEther(amount), fromToken.value, toToken.value, userWallet, router);
         if (metamaskStatus) {
             let wallet = await connectWallet();
