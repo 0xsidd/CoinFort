@@ -20,7 +20,7 @@ const getProofInternal = async (preImage,calldata1,calldata2, chainid) => {
     const preImageInDec = ascii_to_dec(preImage);
     const hashVal = poseidon.F.toString(poseidon([preImageInDec.toString()]));
     const hashF = poseidon.F.toString(poseidon([hashVal]));
-    console.log(snarkjs);
+    // console.log(snarkjs);
     let { proof, publicSignals } = await snarkjs.groth16.fullProve(
         {
             preHash: hashVal,

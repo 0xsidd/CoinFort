@@ -72,13 +72,13 @@ const TransferAsset = () => {
             let transferCalldata = await transferETH(to, ethers.utils.parseEther(amount));
             let fakeRefundData = await transferETH(sponsor, ethers.utils.parseEther("0.000000001"));
             calldata = [transferCalldata, fakeRefundData]
-            console.log(calldata);
+            // console.log(calldata);
         }
         else {
             let transferCalldata = await tokenTransfer(token.value, to, ethers.utils.parseEther(amount));
             let fakeRefundData = await transferETH(sponsor, ethers.utils.parseEther("0.000000001"));
             calldata = [transferCalldata, fakeRefundData]
-            console.log(calldata[0]);
+            // console.log(calldata[0]);
         }
 
         if (metamaskStatus) {
@@ -100,7 +100,7 @@ const TransferAsset = () => {
         }
         else {
             let wallet;
-            console.log("----------");
+            // console.log("----------");
             proof = await getProof(password, calldata, network.chainId);
             let txData = await generateContractParams(wallet, proof, userid, calldata, password, network.chainId, sponsor);
             const payload =
